@@ -1,69 +1,66 @@
-# Program 9: Simple Multimodal Application
+# Program 8: Simple Text Generator
 
-print("Multimodal AI Application")
-print("-------------------------")
+import random
 
-print("This program combines text and image information.")
+text = """
+python is easy to learn
+python is powerful and popular
+machine learning uses python
+machine learning is interesting
+artificial intelligence uses machine learning
+"""
 
-text = input("\nEnter text about the image: ").lower()
+words = text.lower().split()
 
-print("\nSelect image type:")
-print("1. Animal")
-print("2. Vehicle")
-print("3. Food")
-print("4. Nature")
+model = {}
 
-image_choice = int(input("Enter image type: "))
+# Build Markov model
+for i in range(len(words) - 1):
 
-if image_choice == 1:
-    image_type = "animal"
+    current = words[i]
+    next_word = words[i + 1]
 
-elif image_choice == 2:
-    image_type = "vehicle"
+    if current not in model:
+        model[current] = []
 
-elif image_choice == 3:
-    image_type = "food"
+    model[current].append(next_word)
 
-elif image_choice == 4:
-    image_type = "nature"
+print("Simple Text Generation Model")
+print("----------------------------")
 
-else:
-    image_type = "unknown"
+start = input("Enter starting word: ").lower()
 
-print("\n--- Multimodal Analysis ---")
-
-print("Text input:", text)
-print("Image type:", image_type)
-
-# Combine text and image information
-if image_type == "animal":
-
-    if "dog" in text:
-        result = "The image probably contains a dog."
-
-    elif "cat" in text:
-        result = "The image probably contains a cat."
-
-    else:
-        result = "The image contains an animal."
-
-elif image_type == "vehicle":
-
-    result = "The image contains a vehicle."
-
-elif image_type == "food":
-
-    result = "The image contains food."
-
-elif image_type == "nature":
-
-    result = "The image contains a natural scene."
+if start not in model:
+    print("Word not found.")
 
 else:
 
-    result = "Unable to identify the image."
+    generated = [start]
+    current = start
 
-print("\nAI Response:")
-print(result)
+    for i in range(15):
 
-print("\nMultimodal processing completed.")
+        if current not in model:
+            break
+
+        next_words = model[current]
+
+        current = random.choice(next_words)
+
+        generated.append(current)
+
+    print("\nGenerated Text:")
+    print(" ".join(generated))
+
+print("\nModel Information:")
+print("Number of training words:", len(words))
+print("Number of learned words:", len(model))
+
+print("\nThis is a simple demonstration")
+print("of next-word text generation.")
+
+print("Real GPT models use")
+print("large neural networks and")
+print("very large training datasets.")
+
+print("\nText generation completed.")
